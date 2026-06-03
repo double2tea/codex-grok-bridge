@@ -23,8 +23,8 @@ process.stdout.write(`Plugin symlink: ${personalPluginPath} -> ${repoRoot}\n`);
 process.stdout.write(`Marketplace: ${marketplacePath}\n`);
 
 function ensureSymlink() {
-  if (fs.existsSync(personalPluginPath)) {
-    const stat = fs.lstatSync(personalPluginPath);
+  const stat = lstatIfExists(personalPluginPath);
+  if (stat) {
     if (stat.isSymbolicLink() && path.resolve(fs.readlinkSync(personalPluginPath)) === repoRoot) {
       return;
     }
@@ -41,13 +41,25 @@ function ensureSymlink() {
 function removeLegacySymlinks() {
   for (const legacyName of legacyPluginNames) {
     const legacyPath = path.join(personalPluginDir, legacyName);
-    if (!fs.existsSync(legacyPath) || !fs.lstatSync(legacyPath).isSymbolicLink()) {
+    const stat = lstatIfExists(legacyPath);
+    if (!stat?.isSymbolicLink()) {
       continue;
     }
     const target = path.resolve(fs.readlinkSync(legacyPath));
     if (target === repoRoot) {
       fs.rmSync(legacyPath, { recursive: true, force: true });
     }
+  }
+}
+
+function lstatIfExists(filePath) {
+  try {
+    return fs.lstatSync(filePath);
+  } catch (error) {
+    if (error && error.code === 'ENOENT') {
+      return undefined;
+    }
+    throw error;
   }
 }
 
