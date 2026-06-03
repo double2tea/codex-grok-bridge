@@ -1,0 +1,20 @@
+{
+  "name": "codex-grok-bridge",
+  "interface": {
+    "displayName": "Codex Grok Bridge"
+  },
+  "plugins": [
+    {
+      "name": "codex-grok-bridge",
+      "source": {
+        "source": "local",
+        "path": "./plugins/codex-grok-bridge"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Engineering"
+    }
+  ]
+}
