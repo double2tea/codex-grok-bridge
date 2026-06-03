@@ -1,0 +1,25 @@
+{
+  "name": "codex-grok-bridge",
+  "version": "0.1.0",
+  "description": "Delegate Codex work and native Grok search/visual generation to the local Grok Build CLI through MCP tools.",
+  "author": {
+    "name": "Local developer"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Codex Grok Bridge",
+    "shortDescription": "Call Grok Build from Codex",
+    "longDescription": "Codex Grok Bridge lets Codex hand off exploration, implementation, review, native search, and visual generation tasks to the local Grok Build CLI while keeping Codex responsible for final source, artifact, diff, and test verification.",
+    "developerName": "Local developer",
+    "category": "Engineering",
+    "capabilities": ["Interactive", "Read", "Write"],
+    "defaultPrompt": [
+      "Use Grok to review this plan and report missing risks.",
+      "Delegate this large test failure investigation to Grok.",
+      "Ask Grok to implement this change, then verify the diff.",
+      "Ask Grok to search the web and return dated source links.",
+      "Ask Grok to generate an image and validate the saved artifact."
+    ]
+  },
+  "mcpServers": "./.mcp.json"
+}

@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "codex-grok-bridge": {
+      "title": "Codex Grok Bridge",
+      "description": "Delegate Codex tasks to the local Grok Build CLI with diff and test audit summaries.",
+      "cwd": ".",
+      "command": "node",
+      "args": ["./mcp/server.cjs", "--stdio"]
+    }
+  }
+}

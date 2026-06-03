@@ -1,0 +1,30 @@
+{
+  "name": "codex-grok-bridge",
+  "version": "0.1.0",
+  "private": true,
+  "type": "commonjs",
+  "description": "Codex plugin MCP server for delegating work to the local Grok Build CLI.",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "install:personal": "node scripts/install-personal.mjs",
+    "type-check": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest --run",
+    "test:coverage": "vitest --run --coverage"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.39.1",
+    "@types/node": "24.10.1",
+    "@vitest/coverage-v8": "4.0.14",
+    "eslint": "9.39.1",
+    "prettier": "3.6.2",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.48.0",
+    "vitest": "4.0.14"
+  }
+}
