@@ -114,7 +114,14 @@ function readRecentRuns(value) {
     });
 }
 function readMode(value) {
-    return value === 'delegate' || value === 'execute' || value === 'review' ? value : undefined;
+    return value === 'delegate' ||
+        value === 'execute' ||
+        value === 'review' ||
+        value === 'search' ||
+        value === 'image' ||
+        value === 'video'
+        ? value
+        : undefined;
 }
 function readStatus(value) {
     return value === 'success' || value === 'error' || value === 'cancelled' ? value : undefined;

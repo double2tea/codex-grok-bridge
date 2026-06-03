@@ -16,8 +16,10 @@ export interface ValidatedArtifact {
 export interface ValidatedCapability {
     readonly result: Record<string, unknown>;
     readonly artifacts?: readonly ValidatedArtifact[];
+    readonly recoveredArtifacts?: boolean;
 }
 export declare function runCapabilityTool(manager: RunManager, args: unknown, kind: CapabilityKind): Promise<string>;
+export declare function validateCapabilityWithNativeRecovery(kind: CapabilityKind, run: StructuredRunResult, request: CapabilityToolRequest): ValidatedCapability;
 export declare function parseCapabilityRequest(args: unknown, kind: CapabilityKind): CapabilityToolRequest;
 export declare function validateCapabilityOutput(kind: CapabilityKind, grokOutput: string, outputDir?: string): ValidatedCapability;
 export declare function parseStructuredRunSummary(summary: string): StructuredRunResult;

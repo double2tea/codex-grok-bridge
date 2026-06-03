@@ -128,7 +128,14 @@ function readRecentRuns(value: unknown): readonly RecentRun[] {
 }
 
 function readMode(value: string | undefined): GrokMode | undefined {
-  return value === 'delegate' || value === 'execute' || value === 'review' ? value : undefined;
+  return value === 'delegate' ||
+    value === 'execute' ||
+    value === 'review' ||
+    value === 'search' ||
+    value === 'image' ||
+    value === 'video'
+    ? value
+    : undefined;
 }
 
 function readStatus(value: string | undefined): RecentRun['status'] | undefined {
