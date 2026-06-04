@@ -60,6 +60,31 @@ describe('RunManager', () => {
     expect(summary).toContain('cli.txt');
   });
 
+  it('disables CLI fallback for read-only runs', async () => {
+    const workspaceRoot = await makeGitWorkspace();
+    const fakeGrok = await writeFakeCliFallbackGrok();
+    const store = new SessionStore(await makeTempDir('codex-grok-bridge-state-'));
+    const manager = new RunManager(store);
+
+    await expect(manager.run(makeRequest(workspaceRoot, fakeGrok, false, 'auto'))).rejects.toThrow(
+      'Read-only Grok ACP failed; CLI fallback disabled'
+    );
+    await expect(fs.stat(path.join(workspaceRoot, 'cli.txt'))).rejects.toThrow();
+  });
+
+  it('rejects read-only runs on dirty git workspaces', async () => {
+    const workspaceRoot = await makeGitWorkspace();
+    const fakeGrok = await writeFakeGrok('write');
+    const store = new SessionStore(await makeTempDir('codex-grok-bridge-state-'));
+    const manager = new RunManager(store);
+    await fs.writeFile(path.join(workspaceRoot, 'existing.txt'), 'dirty');
+
+    await expect(manager.run(makeRequest(workspaceRoot, fakeGrok, false))).rejects.toThrow(
+      'Read-only Grok run requires a clean git working tree'
+    );
+    await expect(fs.stat(path.join(workspaceRoot, 'grok.txt'))).rejects.toThrow();
+  });
+
   it('cancels an active ACP run', async () => {
     const workspaceRoot = await makeGitWorkspace();
     const fakeGrok = await writeFakeSlowGrok();

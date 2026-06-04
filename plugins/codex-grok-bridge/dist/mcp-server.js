@@ -39,7 +39,7 @@ class McpServer {
                 this.respond(id, {
                     protocolVersion: '2024-11-05',
                     capabilities: { tools: {} },
-                    serverInfo: { name: 'codex-grok-bridge', version: '0.1.0' }
+                    serverInfo: { name: 'codex-grok-bridge', version: '0.1.1' }
                 });
                 return;
             }

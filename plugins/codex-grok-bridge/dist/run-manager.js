@@ -86,6 +86,16 @@ class RunManager {
         const createdAt = Date.now();
         const before = await (0, git_js_1.getGitAudit)(request.workspaceRoot);
         let terminalFailureLogged = false;
+        if (!request.allowWrites && before.isGitRepo && before.statusShort.length > 0) {
+            const error = new Error('Read-only Grok run requires a clean git working tree');
+            this.logger.write(runId, {
+                request: (0, run_log_js_1.runRequestLogView)(request),
+                status: 'error',
+                beforeGit: before,
+                error: error.message
+            });
+            throw error;
+        }
         if (signal.aborted) {
             const error = new Error('Grok run cancelled before start');
             this.logger.write(runId, {
@@ -170,6 +180,9 @@ class RunManager {
         const prompt = (0, prompt_js_1.buildGrokPrompt)(request);
         const storedSession = this.store.getSession(request.workspaceRoot, request.mode);
         let fallbackReason;
+        if (!request.allowWrites && request.options.engine === 'cli') {
+            throw new Error('Read-only Grok runs require ACP; CLI can write outside bridge controls');
+        }
         if (request.options.engine !== 'cli') {
             try {
                 return await (0, grok_acp_js_1.runGrokAcp)(request, prompt, storedSession, signal, {
@@ -187,6 +200,9 @@ class RunManager {
                     throw error;
                 }
                 fallbackReason = error instanceof Error ? error.message : String(error);
+                if (!request.allowWrites) {
+                    throw new Error(`Read-only Grok ACP failed; CLI fallback disabled: ${fallbackReason}`);
+                }
             }
         }
         return (0, grok_cli_js_1.runGrokCli)(request, prompt, signal, fallbackReason);

@@ -1,6 +1,6 @@
 {
   "name": "codex-grok-bridge",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Delegate Codex work and native Grok search/visual generation to the local Grok Build CLI through MCP tools.",
   "author": {
     "name": "Local developer"

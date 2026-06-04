@@ -48,6 +48,14 @@ standard entry to `~/.agents/plugins/marketplace.json`.
 
 The plugin expects a logged-in `grok` CLI on the local machine.
 
+## Waiting Time
+
+First Grok ACP startup, session restore, search, image generation, and video generation can take
+several minutes. Wait for the tool result before retrying the same request.
+
+If a read-only review needs a clean workspace, commit, stash, or move unrelated local changes before
+starting the run.
+
 The search/image/video tools do not call xAI REST APIs or any other external API from the plugin.
 They send strict prompts to Grok Build, then validate the returned JSON. Media generation also
 checks that returned artifacts exist, are non-empty, use an expected extension, and stay inside the

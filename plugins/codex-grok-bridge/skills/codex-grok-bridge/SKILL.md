@@ -35,6 +35,8 @@ use a write-capable tool.
 
 Codex remains the final owner. After any Grok call:
 
+- Expect first ACP startup, session restore, search, image generation, and video generation to take
+  several minutes; wait for the tool result before retrying the same request.
 - Inspect Grok's summary and risks.
 - Inspect the returned changed files and diff summary.
 - Open the returned run log path when the output is ambiguous, missing, or surprising.
